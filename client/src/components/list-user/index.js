@@ -1,8 +1,7 @@
-import listUser from "../../data/list-user.json";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 function ListUserComponent() {
-  const [users] = useState(listUser);
+  const [users, setUsers] = useState([]);
 
   const listItems = users.map((user, index) => (
     <tr key={index}>
@@ -12,6 +11,25 @@ function ListUserComponent() {
       <td>{user.phone}</td>
     </tr>
   ));
+
+  useEffect(() => {
+    const requestOptions = {
+      method: "GET",
+      redirect: "follow",
+    };
+
+    fetch("http://localhost:5000/users", requestOptions)
+      .then((response) => response.text())
+      .then((result) => {
+        try {
+          const dataJson = JSON.parse(result);
+          setUsers(dataJson.list);
+        } catch (error) {
+          console.error(error);
+        }
+      })
+      .catch((error) => console.log("error", error));
+  }, []);
 
   return (
     <div>
