@@ -2,16 +2,19 @@ import React, { useState, useEffect } from "react";
 
 function ListUserComponent() {
   const [users, setUsers] = useState([]);
+  const [columns, setColumns] = useState([]);
 
-  const listItems = users.map((user, index) => (
-    <tr key={index}>
-      <td>{user.name}</td>
-      <td>{user.age}</td>
-      <td>{user.address}</td>
-      <td>{user.phone}</td>
-    </tr>
-  ));
-
+  function buildDataTable(data) {
+    const firstUser = data[0];
+    let listColumns = [];
+    Object.keys(firstUser).forEach((key) => {
+      listColumns.push({
+        title: key,
+        dataIndex: key,
+      });
+    });
+    return listColumns;
+  }
   useEffect(() => {
     const requestOptions = {
       method: "GET",
@@ -24,6 +27,8 @@ function ListUserComponent() {
         try {
           const dataJson = JSON.parse(result);
           setUsers(dataJson.list);
+          const c = buildDataTable(dataJson.list);
+          setColumns(c);
         } catch (error) {
           console.error(error);
         }
@@ -36,13 +41,22 @@ function ListUserComponent() {
       <table>
         <thead>
           <tr>
-            <th>name</th>
-            <th>age</th>
-            <th>address</th>
-            <th>phone</th>
+            {columns.map((c, index) => {
+              return <th key={index}>{c.title}</th>;
+            })}
           </tr>
         </thead>
-        <tbody>{listItems}</tbody>
+        <tbody>
+          {users.map((user, indexUser) => {
+            return (
+              <tr key={indexUser}>
+                {columns.map((c, indexC) => {
+                  return <td key={indexC}>{user[`${c.dataIndex}`]}</td>;
+                })}
+              </tr>
+            );
+          })}
+        </tbody>
       </table>
     </div>
   );

@@ -26,6 +26,7 @@ def login():
             'age': user[2],
             'phone': user[3],
             'address': user[4],
+            'test_column_1': user[5]
         }
         user_array.append(user_object)
 
