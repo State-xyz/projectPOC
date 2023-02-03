@@ -1,4 +1,18 @@
+import listUser from "../../data/list-user.json";
+import React, { useState } from "react";
+
 function ListUserComponent() {
+  const [users] = useState(listUser);
+
+  const listItems = users.map((user, index) => (
+    <tr key={index}>
+      <td>{user.name}</td>
+      <td>{user.age}</td>
+      <td>{user.address}</td>
+      <td>{user.phone}</td>
+    </tr>
+  ));
+
   return (
     <div>
       <table>
@@ -10,20 +24,7 @@ function ListUserComponent() {
             <th>phone</th>
           </tr>
         </thead>
-        <tbody>
-          <tr>
-            <td>Phuong</td>
-            <td>20</td>
-            <td>Ha Noi</td>
-            <td>0987888999</td>
-          </tr>
-          <tr>
-            <td>Nam</td>
-            <td>30</td>
-            <td>Tp Ho Chi Minh</td>
-            <td>0988666999</td>
-          </tr>
-        </tbody>
+        <tbody>{listItems}</tbody>
       </table>
     </div>
   );

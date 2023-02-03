@@ -1,0 +1,14 @@
+[
+    {
+        "name": "Alice",
+        "age": "22",
+        "address": "Hoi An",
+        "phone": "0988123456"
+    },
+    {
+        "name": "Bob",
+        "age": "25",
+        "address": "Da Nang",
+        "phone": "0976456789"
+    }
+]
