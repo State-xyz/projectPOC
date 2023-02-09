@@ -21,7 +21,7 @@ function ListUserComponent() {
       redirect: "follow",
     };
 
-    fetch("http://localhost:5000/users", requestOptions)
+    fetch("https://isb79xn7e5.execute-api.us-west-2.amazonaws.com/prod/", requestOptions)
       .then((response) => response.text())
       .then((result) => {
         try {
